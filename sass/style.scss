@@ -1,0 +1,162 @@
+:root {
+    --color-theme: #00215e;
+}
+
+html, body {
+    padding: 0px;
+    margin: 0px;
+}
+
+html {
+    background-image: url("/img/clouds_by_mia_2022.png");
+    background-attachment: fixed;
+    background-size: 1200px auto;
+    background-position: 50% 0px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a:link, a:visited {
+    color: #0969da;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.app {
+    display: flex;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    min-height: 400px;
+    max-width: 800px;
+    margin: 32px auto 32px auto;
+    border-radius: 4px;
+}
+
+.sidebar {
+    min-width: 200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 80px 10px 10px 10px;
+    box-sizing: border-box;
+}
+
+.main {
+    flex: 1;
+    width: 100%;
+    background-color: #fff;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 20px;
+}
+
+p, li {
+    line-height: 1.6;
+}
+
+h1:first-child, h2:first-child, p:first-child {
+    margin-top: 0px;
+}
+
+h1:last-child, h2:last-child, p:last-child {
+    margin-bottom: 0px;
+}
+
+.sidebar-item:link, .sidebar-item:visited {
+    font-size: 16px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #222;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.sidebar-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.screenshot {
+    width: 100%;
+    display: block;
+}
+
+.h-stack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.h-stack h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    flex: 1;
+}
+
+.app-icon {
+    max-width: 48px;
+}
+
+hr {
+    border: none;
+    color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 2px;
+}
+
+.banner-download {
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 20px;
+    font-size: 16px;
+    margin: 0px -20px 0px -20px;
+    display: flex;
+    align-items: center;
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-button-container {
+    padding: 0px 20px 0px 20px;
+}
+
+.subtitle {
+    color: #999;
+    font-size: 12px;
+}
+
+.download-button:link, .download-button:visited {
+    background-color: #111;
+    color: #fff;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.download-button:hover {
+    box-shadow: 0px 0px 0px 3px rgba(70, 145, 208, 0.25);
+    text-decoration: none;
+}

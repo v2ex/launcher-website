@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e" />
+  <title>CodeLauncher</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="app">
+    <div class="sidebar">
+      {% block sidebar %}
+      {% set home = ['/', 'CodeLauncher'] %}
+      {% set cases = ['/use-cases/', 'Use Cases'] %}
+      {% set roadmap = ['/roadmap/', 'Roadmap'] %}
+      {% set items = [home, cases, roadmap] %}
+      {% for item in items %}
+      <a href="{% if item[0] == '/' %}/{% else %}{{ item[0] }}{% endif %}" class="sidebar-item{% if page.path and item[0] == page.path %} active{% endif %}{% if not page.path and item[0] == '/' %} active{% endif %}">{{ item[1] }}</a>
+      {% endfor %}
+      {% endblock %}
+    </div>
+    <div class="main">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+</body>
+</html>

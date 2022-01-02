@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="h-stack">
+  <img src="./img/AppIcon.png" class="app-icon">
+  <h1>CodeLauncher</h1>
+</div>
+<p>As a developer, you need to run many different processes for your development work. CodeLauncher provides a hub for all the server software you need, and you can organize them by project and check their output accordingly.</p>
+<p><img src="/screenshots/CodeLauncher-screenshot-1.png" class="screenshot"></p>
+<h2>Core Features</h2>
+<ul>
+  <li>Manage processes by project</li>
+  <li>Check the output of each process</li>
+  <li>Auto start projects when CodeLauncher starts</li>
+  <li>Manage environment variables of each process</li>
+  <li>Open project directory with Terminal or Visual Studio Code</li>
+  <li>Export/import projects for sharing between team members</li>
+</ul>
+<div class="banner-download">
+  <div class="download-info">
+    <span>The latest version: 1.0 (100)</span>
+    <p class="subtitle">Released on Jan 2, 2022</p>
+  </div>
+  <div class="download-button-container">
+    <a href="https://github.com/v2ex/launcher/releases/download/release-1.0.100/CodeLauncher.zip" target="_blank" class="download-button">Download</a>
+  </div>
+</div>
+<h2>Open Source</h2>
+<p>CodeLauncher is free and open-source.</p>
+<p>If you have used <a href="https://supervisord.org/" target="_blank">supervisor</a> on Linux before, you will find the concept is quite similar. CodeLauncher works like a GUI version of supervisor for macOS, while the main goals are to make it easier to organize processes and check the output.</p>
+{% endblock %}
