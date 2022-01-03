@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="h-stack">
-  <img src="./img/AppIcon.png" class="app-icon">
+  <img src="./img/AppIcon.png?r={{ get_file_hash(path="img/AppIcon.png", sha_type=256) }}" class="app-icon">
   <h1>CodeLauncher</h1>
 </div>
 <p>As a developer, you need to run many different processes for your development work. CodeLauncher provides a hub for all the server software you need, and you can organize them by project and check their output accordingly.</p>

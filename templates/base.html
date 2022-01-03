@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#00215e" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}CodeLauncher{% endblock %}</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?r={{ get_file_hash(path="style.css", sha_type=256) }}">
 </head>
 <body>
 <div class="wrapper">
