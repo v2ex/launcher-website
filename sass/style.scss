@@ -8,10 +8,6 @@ html, body {
 }
 
 html {
-    background-image: url("/img/clouds_by_mia_2022.png");
-    background-attachment: fixed;
-    background-size: 1200px auto;
-    background-position: 50% 0px;
 }
 
 body {
@@ -31,6 +27,10 @@ a:hover {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    background-image: url("/img/clouds_by_mia_2022.png");
+    background-attachment: fixed;
+    background-size: 1200px auto;
+    background-position: 50% 0px;
 }
 
 .app {
@@ -64,6 +64,7 @@ a:hover {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 p, li {
@@ -162,19 +163,27 @@ hr {
 }
 
 @media (max-width: 600px) {
-    html {
+    wrapper {
         background-size: auto 100vh;
     }
 
     .app {
         margin: 0px;
         border-radius: 0px;
+        flex-direction: column;
     }
 
     .sidebar {
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
         min-width: 160px;
+        flex-direction: row;
+        padding: 0px;
+        gap: 0px;
+    }
+
+    .sidebar-item:link, .sidebar-item:visited {
+        border-radius: 0px;
     }
 
     .main {
