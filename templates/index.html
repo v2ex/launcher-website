@@ -1,5 +1,35 @@
 {% extends 'base.html' %}
 
+{% block ready %}
+const App = {
+  data() {
+    return {
+      version: "1.0",
+      build: "100",
+      url: "https://opensource.v2ex.pro/codelauncher/release-1.0.100/CodeLauncher.zip",
+      released: "Jan 2, 2022"
+    }
+  }
+}
+
+const vm = Vue.createApp(App).mount('#app')
+
+axios.get('https://opensource.v2ex.pro/codelauncher/appcast.xml')
+  .then(function(response) {
+    console.log(response.data);
+    let x2js = new X2JS();
+    let appcast = x2js.xml_str2json(response.data);
+    vm.version = appcast.rss.channel.item.title;
+    vm.url = appcast.rss.channel.item.enclosure._url;
+    let pubdate = new Date(appcast.rss.channel.item.pubDate);
+    vm.released = pubdate.toDateString();
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
+{% endblock %}
+
 {% block content %}
 <div class="h-stack">
   <img src="./img/AppIcon_v1.png?r={{ get_file_hash(path="img/AppIcon_v1.png", sha_type=256) }}" class="app-icon">
@@ -18,11 +48,11 @@
 </ul>
 <div class="banner-download">
   <div class="download-info">
-    <span>The latest version: 1.0 (100)</span>
-    <p class="subtitle">Released on Jan 2, 2022</p>
+    <span>The latest version: {% raw %}{{ version }}{% endraw %}</span>
+    <p class="subtitle">Released on {% raw %}{{ released }}{% endraw %}</p>
   </div>
   <div class="download-button-container">
-    <a href="https://github.com/v2ex/launcher/releases/download/release-1.0.100/CodeLauncher.zip" target="_blank" class="download-button">Download</a>
+    <a v-bind:href="url" target="_blank" class="download-button">Download</a>
   </div>
 </div>
 <h2>Open Source</h2>
