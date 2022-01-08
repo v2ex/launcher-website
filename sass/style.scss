@@ -34,8 +34,8 @@ a:hover {
 #app {
     display: flex;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    min-height: 400px;
-    max-width: 800px;
+    min-height: calc(400px - env(safe-area-inset-left) - env(safe-area-inset-right));
+    max-width: calc(800px - env(safe-area-inset-left) - env(safe-area-inset-right));
     margin: 32px auto 32px auto;
     border-radius: 4px;
 }
