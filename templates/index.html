@@ -1,34 +1,27 @@
 {% extends 'base.html' %}
 
-{% block ready %}
-const App = {
-  data() {
-    return {
-      version: "1.0",
-      build: "100",
-      url: "https://opensource.v2ex.pro/codelauncher/release-1.0.100/CodeLauncher.zip",
-      released: "Jan 2, 2022"
-    }
-  }
-}
+{% block head %}
+<script>
+  axios.get('https://opensource.v2ex.pro/codelauncher/appcast.xml')
+  .then(response => {
+    const x2js = new X2JS();
+    const appcast = x2js.xml_str2json(response.data);
 
-const vm = Vue.createApp(App).mount('#app')
+    const download = {
+      latestVersion: appcast.rss.channel.item.title,
+      releaseDate: new Date(appcast.rss.channel.item.pubDate),
+      url: appcast.rss.channel.item.enclosure._url,
+    };
 
-axios.get('https://opensource.v2ex.pro/codelauncher/appcast.xml')
-  .then(function(response) {
-    let x2js = new X2JS();
-    let appcast = x2js.xml_str2json(response.data);
-    vm.version = appcast.rss.channel.item.title;
-    vm.url = appcast.rss.channel.item.enclosure._url;
-    let pubdate = new Date(appcast.rss.channel.item.pubDate);
-    vm.released = pubdate.toDateString();
-    console.log("CodeLauncher latest version is " + vm.version + " released on " + vm.released);
-    console.log("Download URL is " + vm.url);
+    document.querySelector('.latest-version').textContent = `The latest version: ${download.latestVersion}`;
+    document.querySelector('.release-date').textContent = `Released on ${download.releaseDate.toDateString()}`;
+    document.querySelector('.download-button').href = download.url;
+
+    console.log("CodeLauncher latest version is " + download.latestVersion + " released on " + download.releaseDate);
+    console.log("Download URL is " + download.url);
   })
-  .catch(function (error) {
-    console.log(error)
-  })
-
+  .catch(error => console.log(error));
+</script>
 {% endblock %}
 
 {% block content %}
@@ -49,11 +42,11 @@ axios.get('https://opensource.v2ex.pro/codelauncher/appcast.xml')
 </ul>
 <div class="banner-download">
   <div class="download-info">
-    <span>The latest version: {% raw %}{{ version }}{% endraw %}</span>
-    <p class="subtitle">Released on {% raw %}{{ released }}{% endraw %}</p>
+    <span class="latest-version">The latest version: 1.0.1</span>
+    <p class="release-date subtitle">Released on Fri Jan 07 2022</p>
   </div>
   <div class="download-button-container">
-    <a v-bind:href="url" target="_blank" class="download-button">Download</a>
+    <a target="_blank" class="download-button" href="https://opensource.v2ex.pro/codelauncher/release-1.0.1.102/CodeLauncher.zip">Download</a>
   </div>
 </div>
 <h2>Open Source</h2>
