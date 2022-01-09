@@ -2,19 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="theme-color" content="#00215e" />
+  <meta name="theme-color" content="#00215e">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}CodeLauncher{% endblock %}</title>
   <link rel="stylesheet" href="/style.css?r={{ get_file_hash(path="style.css", sha_type=256) }}">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.global.prod.min.js" integrity="sha512-yY2w8QVShzoLAachKPHtZRjXZeQOi9rQ2dYEYLf+lelt+TvZVOm/AlqVX6xFrjiy6wKDxgqvT1RL3BjxPdq/UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="text/javascript">
-  window.addEventListener('DOMContentLoaded', (event) => {
-    {% block ready %}
-    {% endblock %}
-  });
-  </script>
+  {% block head %}{% endblock %}
 </head>
 <body>
 <div class="wrapper">
