@@ -4,8 +4,6 @@ path = "use-cases"
 template = "page.html"
 +++
 
-# Use Cases
-
 This page contains a list of useful things you can accomplish with CodeLauncher.
 
 ## Web Development

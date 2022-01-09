@@ -1,0 +1,14 @@
+<div class="sidebar">
+  <div class="sidebar-inner">
+    {% block sidebar %}
+    {% set home = ['/', 'CodeLauncher'] %}
+    {% set cases = ['/use-cases/', 'Use Cases'] %}
+    {% set roadmap = ['/roadmap/', 'Roadmap'] %}
+    {% set blog = ['/blog/', 'Blog'] %}
+    {% set items = [home, cases, roadmap, blog] %}
+    {% for item in items %}
+    <a href="{% if item[0] == '/' %}/{% else %}{{ item[0] }}{% endif %}" class="sidebar-item{% if current_path == item[0] %} active{% endif %}{% if '/blog/2' in current_path and item[0] == '/blog/' %} active{% endif %}">{{ item[1] }}</a>
+    {% endfor %}
+    {% endblock %}
+  </div>
+</div>

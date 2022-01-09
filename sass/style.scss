@@ -74,11 +74,11 @@ p, li {
     line-height: 1.6;
 }
 
-h1:first-child, h2:first-child, p:first-child {
+h1:first-child, h2:first-child, p:first-child, ul:first-child {
     margin-top: 0px;
 }
 
-h1:last-child, h2:last-child, p:last-child {
+h1:last-child, h2:last-child, p:last-child, ul:last-child {
     margin-bottom: 0px;
 }
 
@@ -165,6 +165,58 @@ hr {
     text-decoration: none;
 }
 
+#breadcrumb {
+    font-size: 14px;
+    padding: 5px;
+    line-height: 1;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.chevron {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("/img/chevron_right.png");
+    background-size: 12px 12px;
+}
+
+.list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.list-item-prefix {
+
+}
+
+.list-item-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.list-item-title {
+    flex: 1;
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: block;
+    border: none;
+}
+
 @media (max-width: 600px) {
     .wrapper {
         align-items: flex-start;
@@ -196,6 +248,7 @@ hr {
     }
 
     .sidebar-item:link, .sidebar-item:visited {
+        font-size: 14px;
         border-radius: 0px;
     }
 

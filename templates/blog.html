@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ section.title | safe }}{% endblock %}
+
+{% block content %}
+  <h1 class="title">
+    {{ section.title }}
+  </h1>
+  {{ section.content | safe }}
+  <div class="list-items">
+  {% for page in section.pages %}
+    <div class="list-item">
+      <div class="list-item-prefix">{{ page.date }}</div>
+      {% if page.extra.author %}<div class="list-item-avatar"><a href="https://twitter.com/{{ page.extra.author_twitter }}" target="_blank"><img src="https://github.com/{{ page.extra.author_github }}.png" class="avatar"></a></div>{% endif %}
+      <div class="list-item-title"><a href="{{ page.path }}">{{ page.title }}</a></div>
+    </div>
+  {% endfor %}
+  </div>
+{% endblock content %}

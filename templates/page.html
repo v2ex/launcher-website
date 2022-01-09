@@ -3,5 +3,7 @@
 {% block title %}{{ page.title | safe }}{% endblock %}
 
 {% block content %}
+  {% include 'breadcrumb.html' %}
+  <h1>{{ page.title | safe }}</h1>
   {{ page.content | safe }}
 {% endblock content %}

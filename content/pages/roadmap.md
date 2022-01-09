@@ -4,8 +4,6 @@ path = "roadmap"
 template = "page.html"
 +++
 
-# Roadmap
-
 We launched CodeLauncher at the beginning of 2022, and it is an app we use every day. Here is a plan to make it more useful in the future.
 
 ## Terminal
