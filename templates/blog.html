@@ -11,7 +11,7 @@
   {% for page in section.pages %}
     <div class="list-item">
       <div class="list-item-prefix">{{ page.date }}</div>
-      {% if page.extra.author %}<div class="list-item-avatar"><a href="https://twitter.com/{{ page.extra.author_twitter }}" target="_blank"><img src="/img/avatars/{{ page.extra.author_github }}.png" class="avatar"></a></div>{% endif %}
+      {% if page.extra.author %}<div class="list-item-avatar"><a href="https://twitter.com/{{ page.extra.author_twitter }}" target="_blank"><img src="/img/avatars/{{ page.extra.author_github }}.png" class="avatar" width="24" height="24"></a></div>{% endif %}
       <div class="list-item-title"><a href="{{ page.path }}">{{ page.title }}</a></div>
     </div>
   {% endfor %}
