@@ -1,4 +1,5 @@
 :root {
+    --shadow-highlight: 0px 0px 0px 3px rgba(70, 145, 208, 0.25);
 }
 
 html, body {
@@ -160,7 +161,7 @@ hr {
 }
 
 .download-button:hover {
-    box-shadow: 0px 0px 0px 3px rgba(70, 145, 208, 0.25);
+    box-shadow: var(--shadow-highlight);
     text-decoration: none;
 }
 
@@ -214,6 +215,25 @@ hr {
     border-radius: 50%;
     display: block;
     border: none;
+}
+
+.avatar:hover {
+    box-shadow: var(--shadow-highlight);
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-name {
+    font-size: 14px;
+}
+
+.page-info {
+    font-size: 14px;
+    color: #999;
 }
 
 @media (max-width: 600px) {

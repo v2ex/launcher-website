@@ -1,0 +1,7 @@
+{% if page.extra.author %}
+<div class="author">
+  <a href="https://twitter.com/{{ page.extra.author_twitter }}" target="_blank"><img src="/img/avatars/{{ page.extra.author_github }}.png" class="avatar"></a>
+  <div class="author-name"><a href="https://twitter.com/{{ page.extra.author_twitter }}" target="_blank">{{ page.extra.author }}</a></div>
+  <div class="page-info">{{ page.date }} · {{ page.reading_time }} min read</div>
+</div>
+{% endif %}
