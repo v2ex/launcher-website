@@ -236,6 +236,29 @@ hr {
     color: #999;
 }
 
+@media (min-width: 601px) and (max-width: 799px) {
+    .wrapper {
+        align-items: flex-start;
+        background-size: auto 100vh;
+    }
+
+    #app {
+        margin: 0px;
+        border-radius: 0px;
+    }
+
+    .sidebar {
+        min-width: 160px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .main {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+}
+
 @media (max-width: 600px) {
     .wrapper {
         align-items: flex-start;
