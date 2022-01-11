@@ -1,0 +1,18 @@
+{
+    "short_name": "CodeLauncher",
+    "name": "CodeLauncher",
+    "icons": [
+        {
+            "src": "/img/icon_192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable any"
+        }
+    ],
+    "start_url": "/?source=pwa",
+    "background_color": "#00215e",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#00215e",
+    "description": "Process manager for developers"
+}
