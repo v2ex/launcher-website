@@ -9,11 +9,6 @@ html, body {
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-image: url("/img/clouds_by_mia_2022_optimized.png");
-    background-attachment: fixed;
-    background-size: auto 1050px;
-    background-position: 50% 0px;
-    background-repeat: repeat-x;
 }
 
 a:link, a:visited {
@@ -26,14 +21,19 @@ a:hover {
 }
 
 .wrapper {
-    min-height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    background-image: url("/img/clouds_by_mia_2022_optimized.png");
+    background-attachment: fixed;
+    background-size: auto 1050px;
+    background-position: 50% 0px;
+    background-repeat: repeat-x;
     display: flex;
 }
 
 #app {
     display: flex;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    min-height: calc(400px - env(safe-area-inset-left) - env(safe-area-inset-right));
+    min-height: calc(100vh - 80px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     max-width: calc(800px - env(safe-area-inset-left) - env(safe-area-inset-right));
     margin: 32px auto 32px auto;
     border-radius: 4px;
@@ -238,11 +238,13 @@ hr {
 
 @media (min-width: 601px) and (max-width: 799px) {
     .wrapper {
+        min-height: calc(100vh - 80px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
         align-items: flex-start;
         background-size: auto 100vh;
     }
 
     #app {
+        min-height: calc(100vh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
         margin: 0px;
         border-radius: 0px;
     }
@@ -261,6 +263,7 @@ hr {
 
 @media (max-width: 600px) {
     .wrapper {
+        min-height: calc(100vh - 80px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
         align-items: flex-start;
         background-size: auto 100vh;
     }
