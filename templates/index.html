@@ -15,7 +15,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     };
 
     document.querySelector('.latest-version').textContent = `The latest version: ${download.latestVersion}`;
-    document.querySelector('.release-date').textContent = `Released on ${download.releaseDate.toDateString()}`;
+    // use `MMM dd, YYYY` date format, remove day of week
+    const dateSegments = download.releaseDate.toDateString().split(' ');
+    const releaseDateString = `${dateSegments[1]} ${dateSegments[2]}, ${dateSegments[3]}`;
+    document.querySelector('.release-date').textContent = `Released on ${releaseDateString}`;
     document.querySelector('.download-button').href = download.url;
 
     console.log("CodeLauncher latest version is " + download.latestVersion + " released on " + download.releaseDate);
@@ -50,7 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 <div class="banner-download">
   <div class="download-info">
     <span class="latest-version">The latest version: 1.0.1</span>
-    <p class="release-date subtitle">Released on Fri Jan 07 2022</p>
+    <p class="release-date subtitle">Released on Jan 07, 2022</p>
   </div>
   <div class="download-button-container">
     <a target="_blank" class="download-button" href="https://opensource.v2ex.pro/codelauncher/release-1.0.1.102/CodeLauncher.zip">Download</a>
