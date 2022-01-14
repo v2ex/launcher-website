@@ -1,5 +1,11 @@
 :root {
     --shadow-highlight: 0px 0px 0px 3px rgba(70, 145, 208, 0.25);
+    --backdrop-blur-radius: 10px;
+    --default-transition-option: 0.15s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 html, body {
@@ -35,15 +41,15 @@ a:hover {
     display: flex;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     max-width: calc(800px - env(safe-area-inset-left) - env(safe-area-inset-right));
-    margin: 32px auto 32px auto;
+    margin: 32px auto;
     border-radius: 4px;
 }
 
 .sidebar {
     min-width: 200px;
     background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(var(--backdrop-blur-radius));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur-radius));
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     border-right: 1px solid rgba(0, 0, 0, 0.05);
@@ -89,6 +95,7 @@ h1:last-child, h2:last-child, p:last-child, ul:last-child {
     color: #222;
     padding: 10px;
     border-radius: 4px;
+    transition: background-color var(--default-transition-option);
 }
 
 .sidebar-item:hover {
@@ -130,7 +137,7 @@ hr {
 }
 
 .banner-download {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: #f7f7f7;
     padding: 20px;
     font-size: 16px;
     margin: 0px -20px 0px -20px;
@@ -157,7 +164,7 @@ hr {
     padding: 10px 20px 10px 20px;
     font-size: 16px;
     border-radius: 6px;
-    transition: box-shadow 0.15s ease-in-out;
+    transition: box-shadow var(--default-transition-option);
 }
 
 .download-button:hover {
@@ -236,7 +243,59 @@ hr {
     color: #999;
 }
 
-@media (min-width: 601px) and (max-width: 799px) {
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100vw;
+    padding: 0 20px;
+    opacity: 1;
+    transition: opacity var(--default-transition-option);
+
+    &.fade {
+        opacity: 0;
+    }
+}
+
+.cookie-consent-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: calc(800px - 40px - env(safe-area-inset-left) - env(safe-area-inset-right));
+    padding: 10px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 14px;
+    box-sizing: border-box;
+
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(var(--backdrop-blur-radius));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur-radius));
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    .control-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+.cookie-accept, .cookie-decline {
+    background-color: #f0f0f0;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    transition: box-shadow var(--default-transition-option);
+
+    &:hover {
+        box-shadow: var(--shadow-highlight);
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
     .wrapper {
         align-items: flex-start;
     }
@@ -297,5 +356,10 @@ hr {
     .main {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
+    }
+
+    .cookie-consent-inner {
+        flex-flow: column;
+        gap: 10px;
     }
 }
