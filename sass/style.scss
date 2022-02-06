@@ -26,6 +26,12 @@ a:hover {
     text-decoration: underline;
 }
 
+pre {
+    padding: 10px;
+    font-family: "JetBrains Mono", "Panic Sans", "SF Mono", monospace;
+    border-radius: 4px;
+}
+
 .wrapper {
     position: static;
     min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
