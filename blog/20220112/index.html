@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>1.0.2 · Initial Support for Themes</title>
+  <link rel="apple-touch-icon" href="/img/apple_touch_icon_180.png" sizes="180x180" type="image/png">
+  <link rel="icon" type="image/png" href="/img/icon_192.png" sizes="192x192">
+  <link rel="preconnect" href="https://opensource.v2ex.pro/" crossorigin>
+  <link rel="dns-prefetch" href="https://opensource.v2ex.pro/">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+  <link rel="stylesheet" href="/style.css?r=DmNoT3KN72CTJTfYhZZeMCTfkthrYxpZOLK7JrbPMDA=">
+  <link rel="manifest" href="/manifest.json">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://cl.v2ex.pro/rss.xml">
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    function loadGoogleAnalytics() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-143BR7Z4CE';
+      script.async = true;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-143BR7Z4CE');
+    }
+
+    const consentStr = localStorage.getItem('cookieconsent');
+    if (!consentStr) {
+      // show cookie consent banner
+      document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.getElementById('cookie-consent-template').content.cloneNode(true);
+        function hideBanner() {
+          const banner = document.querySelector('.cookie-consent-banner');
+          banner.classList.add('fade');
+          setTimeout(() => banner.remove(), 200);
+        }
+        elem.querySelector('.cookie-accept').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: true,
+            time: Date.now(),
+          }));
+          hideBanner();
+          loadGoogleAnalytics();
+        });
+        elem.querySelector('.cookie-decline').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: false,
+            time: Date.now(),
+          }));
+          hideBanner();
+        });
+        document.body.appendChild(elem);
+      });
+    } else {
+      const consent = JSON.parse(consentStr);
+      if (consent.accept) {
+        loadGoogleAnalytics();
+      }
+    }
+  </script>
+  
+</head>
+<body>
+<template id="cookie-consent-template">
+  <div class="cookie-consent-banner">
+    <div class="cookie-consent-inner">
+      <span>This website may use cookies for statistics purposes.</span>
+      <div class="control-group">
+        <button class="cookie-accept">OK</button>
+        <button class="cookie-decline">No thanks</button>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="wrapper">
+  <div id="app">
+    <div class="sidebar">
+  <div class="sidebar-inner">
+    
+    
+    
+    
+    
+    
+    
+    <a href="/" class="sidebar-item">CodeLauncher</a>
+    
+    <a href="&#x2F;use-cases&#x2F;" class="sidebar-item">Use Cases</a>
+    
+    <a href="&#x2F;roadmap&#x2F;" class="sidebar-item">Roadmap</a>
+    
+    <a href="&#x2F;blog&#x2F;" class="sidebar-item active">Blog</a>
+    
+    
+  </div>
+</div>
+    <div class="main">
+      
+  
+  <div id="breadcrumb"><a href="/">CodeLauncher</a><span class="chevron"></span><a href="/blog/">Blog</a><span class="chevron"></span></div>
+
+  <h1>1.0.2 · Initial Support for Themes</h1>
+  
+<div class="author">
+  <a href="https://twitter.com/livid" target="_blank"><img src="/img/avatars/livid.png" class="avatar"></a>
+  <div class="author-name"><a href="https://twitter.com/livid" target="_blank">Xin Liu</a></div>
+  <div class="page-info">2022-01-12 · 3 min read</div>
+</div>
+
+  <p>On Jan 12's 1.0.2 update, we added support for themes. Now you can select a theme in the settings. The previous default theme is now called &quot;Use device theme (reverse)&quot; because it uses a dark output under light mode. A new theme called &quot;Dracula&quot; is also added.</p>
+<p>Today I moved the website build system to Vercel. That is my first-time experience with Vercel, and it is fantastic. Previously I first tried to use Cloudflare Pages to build the site since we already use Cloudflare CDN. However, it took them a manual intervention to enable our domain v2ex.pro for Cloudflare Pages custom domain. I still do not know why. While waiting for their response, I googled and found other <a href="https://community.cloudflare.com/t/custom-domain-at-cloudflare-pages-is-stuck-in-522-error/264490">confused and disappointed users</a>.</p>
+<p>So I tried to use GitHub Pages then. But GitHub Pages does not have native support for Zola, the framework I am using for the CodeLauncher website. So I added a GitHub Action for building the website and publishing it to GitHub Pages.</p>
+<p>Then I was looking for a solution to redirect www.v2ex.pro and v2ex.pro to cl.v2ex.pro because currently cl.v2ex.pro is the only website under this domain. <a href="https://github.com/xieyuheng">Yuheng</a> recommended Vercel in the related GitHub issue <a href="https://github.com/v2ex/launcher-website/issues/10">#10</a> as a straightforward solution for setting up that kind of redirection. And ta-da now the website smoothly runs on Vercel and has all expected redirections.</p>
+<p>Comparing the three build solutions I have tried, Vercel provides the best experience overall.</p>
+<ul>
+<li>Cloudflare Pages uses a big image that seemingly includes all the frameworks they can support. It makes building with CF Pages is the slowest. Also, <a href="https://community.cloudflare.com/t/cloudflare-pages-zola-build-fails-glibcxx-3-4-26-not-found/316457/13">it cannot work with the latest version of Zola</a>, and you have to specify an environment variable like ZOLA_VERSION=0.14.0 to use an older version, while as of this writing, the latest version is 0.15.2.</li>
+<li>GitHub Pages natively support Jekyll. But you will need to use an action if you want to use other frameworks. That is probably not a big deal since GH Action is awesome!</li>
+<li>On Vercel, my website build just works. If you need to fine-tune things like the <code>Cache-Control</code> header for images, you can do it with a <a href="https://vercel.com/docs/cli#project-configuration/headers">vercel.json</a> file.</li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

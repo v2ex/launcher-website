@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>xcconfig for DEVELOPMENT_TEAM</title>
+  <link rel="apple-touch-icon" href="/img/apple_touch_icon_180.png" sizes="180x180" type="image/png">
+  <link rel="icon" type="image/png" href="/img/icon_192.png" sizes="192x192">
+  <link rel="preconnect" href="https://opensource.v2ex.pro/" crossorigin>
+  <link rel="dns-prefetch" href="https://opensource.v2ex.pro/">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+  <link rel="stylesheet" href="/style.css?r=DmNoT3KN72CTJTfYhZZeMCTfkthrYxpZOLK7JrbPMDA=">
+  <link rel="manifest" href="/manifest.json">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://cl.v2ex.pro/rss.xml">
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    function loadGoogleAnalytics() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-143BR7Z4CE';
+      script.async = true;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-143BR7Z4CE');
+    }
+
+    const consentStr = localStorage.getItem('cookieconsent');
+    if (!consentStr) {
+      // show cookie consent banner
+      document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.getElementById('cookie-consent-template').content.cloneNode(true);
+        function hideBanner() {
+          const banner = document.querySelector('.cookie-consent-banner');
+          banner.classList.add('fade');
+          setTimeout(() => banner.remove(), 200);
+        }
+        elem.querySelector('.cookie-accept').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: true,
+            time: Date.now(),
+          }));
+          hideBanner();
+          loadGoogleAnalytics();
+        });
+        elem.querySelector('.cookie-decline').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: false,
+            time: Date.now(),
+          }));
+          hideBanner();
+        });
+        document.body.appendChild(elem);
+      });
+    } else {
+      const consent = JSON.parse(consentStr);
+      if (consent.accept) {
+        loadGoogleAnalytics();
+      }
+    }
+  </script>
+  
+</head>
+<body>
+<template id="cookie-consent-template">
+  <div class="cookie-consent-banner">
+    <div class="cookie-consent-inner">
+      <span>This website may use cookies for statistics purposes.</span>
+      <div class="control-group">
+        <button class="cookie-accept">OK</button>
+        <button class="cookie-decline">No thanks</button>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="wrapper">
+  <div id="app">
+    <div class="sidebar">
+  <div class="sidebar-inner">
+    
+    
+    
+    
+    
+    
+    
+    <a href="/" class="sidebar-item">CodeLauncher</a>
+    
+    <a href="&#x2F;use-cases&#x2F;" class="sidebar-item">Use Cases</a>
+    
+    <a href="&#x2F;roadmap&#x2F;" class="sidebar-item">Roadmap</a>
+    
+    <a href="&#x2F;blog&#x2F;" class="sidebar-item active">Blog</a>
+    
+    
+  </div>
+</div>
+    <div class="main">
+      
+  
+  <div id="breadcrumb"><a href="/">CodeLauncher</a><span class="chevron"></span><a href="/blog/">Blog</a><span class="chevron"></span></div>
+
+  <h1>xcconfig for DEVELOPMENT_TEAM</h1>
+  
+<div class="author">
+  <a href="https://twitter.com/livid" target="_blank"><img src="/img/avatars/livid.png" class="avatar"></a>
+  <div class="author-name"><a href="https://twitter.com/livid" target="_blank">Xin Liu</a></div>
+  <div class="page-info">2022-01-19 · 2 min read</div>
+</div>
+
+  <p>To build and test a Swift app on your macOS, you need to sign in to an account with macOS Developer Program enrolled. That process turns into a configuration field known as <code>DEVELOPMENT_TEAM</code> in your project file. So oftentimes, if you git clone a project from other people, you have to change its <code>DEVELOPMENT_TEAM</code> before building and testing locally.</p>
+<p>But that change would create more problems if every participant used a different <code>DEVELOPMENT_TEAM</code> setting. That is common when working with open source projects. In the initial release of CodeLauncher source code, <code>DEVEOPMENT_TEAM</code> is also included in the project file. So we wanted to find a way to simplify this so that every participant will not need to waste time changing these trivial things.</p>
+<p>So the method we find is to use <code>xcconfig</code> files. The project can include a default file for all the default values:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>DEVELOPMENT_TEAM = 3SCMMGZXY8
+</span><span>ORGANIZATION_IDENTIFIER_PREFIX = com.v2ex
+</span><span>CODE_SIGN_IDENTITY = &quot;Developer ID Application&quot;
+</span><span>CODE_SIGN_STYLE = Manual
+</span><span>
+</span><span>#include? &quot;local.xcconfig&quot;
+</span></code></pre>
+<p>Then the last line optionally includes another xcconfig file which git ignores. So personal settings can be put in that <code>local.xcconfig</code> file. Since git ignores it, it will not touch the default values for the project.</p>
+<p>We find that method simple. All you need to do is put your own <code>DEVELOPMENT_TEAM</code> and <code>ORGANIZATION_IDENTIFIER_PREFIX</code> in a <code>local.xcconfig</code> file.</p>
+<p>If Xcode is still complaining about the <code>DEVELOPMENT_TEAM</code> setting, it is probably due to <code>DEVELOPMENT_TEAM</code> being set in the project file. So you will need to make sure that <code>DEVELOPMENT_TEAM</code> is not in the <code>project.pbxproj</code> file.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

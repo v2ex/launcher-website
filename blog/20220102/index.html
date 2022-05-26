@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Introducing CodeLauncher 1.0</title>
+  <link rel="apple-touch-icon" href="/img/apple_touch_icon_180.png" sizes="180x180" type="image/png">
+  <link rel="icon" type="image/png" href="/img/icon_192.png" sizes="192x192">
+  <link rel="preconnect" href="https://opensource.v2ex.pro/" crossorigin>
+  <link rel="dns-prefetch" href="https://opensource.v2ex.pro/">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+  <link rel="stylesheet" href="/style.css?r=DmNoT3KN72CTJTfYhZZeMCTfkthrYxpZOLK7JrbPMDA=">
+  <link rel="manifest" href="/manifest.json">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://cl.v2ex.pro/rss.xml">
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    function loadGoogleAnalytics() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-143BR7Z4CE';
+      script.async = true;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-143BR7Z4CE');
+    }
+
+    const consentStr = localStorage.getItem('cookieconsent');
+    if (!consentStr) {
+      // show cookie consent banner
+      document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.getElementById('cookie-consent-template').content.cloneNode(true);
+        function hideBanner() {
+          const banner = document.querySelector('.cookie-consent-banner');
+          banner.classList.add('fade');
+          setTimeout(() => banner.remove(), 200);
+        }
+        elem.querySelector('.cookie-accept').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: true,
+            time: Date.now(),
+          }));
+          hideBanner();
+          loadGoogleAnalytics();
+        });
+        elem.querySelector('.cookie-decline').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: false,
+            time: Date.now(),
+          }));
+          hideBanner();
+        });
+        document.body.appendChild(elem);
+      });
+    } else {
+      const consent = JSON.parse(consentStr);
+      if (consent.accept) {
+        loadGoogleAnalytics();
+      }
+    }
+  </script>
+  
+</head>
+<body>
+<template id="cookie-consent-template">
+  <div class="cookie-consent-banner">
+    <div class="cookie-consent-inner">
+      <span>This website may use cookies for statistics purposes.</span>
+      <div class="control-group">
+        <button class="cookie-accept">OK</button>
+        <button class="cookie-decline">No thanks</button>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="wrapper">
+  <div id="app">
+    <div class="sidebar">
+  <div class="sidebar-inner">
+    
+    
+    
+    
+    
+    
+    
+    <a href="/" class="sidebar-item">CodeLauncher</a>
+    
+    <a href="&#x2F;use-cases&#x2F;" class="sidebar-item">Use Cases</a>
+    
+    <a href="&#x2F;roadmap&#x2F;" class="sidebar-item">Roadmap</a>
+    
+    <a href="&#x2F;blog&#x2F;" class="sidebar-item active">Blog</a>
+    
+    
+  </div>
+</div>
+    <div class="main">
+      
+  
+  <div id="breadcrumb"><a href="/">CodeLauncher</a><span class="chevron"></span><a href="/blog/">Blog</a><span class="chevron"></span></div>
+
+  <h1>Introducing CodeLauncher 1.0</h1>
+  
+<div class="author">
+  <a href="https://twitter.com/livid" target="_blank"><img src="/img/avatars/livid.png" class="avatar"></a>
+  <div class="author-name"><a href="https://twitter.com/livid" target="_blank">Xin Liu</a></div>
+  <div class="page-info">2022-01-02 · 2 min read</div>
+</div>
+
+  <p>Most modern Web development frameworks like Flask and static site generators like Jekyll run commands. There is usually the main command to start a server listening on a port. As developers make changes to the files in the project folder, that server detects those changes and reload the project to reflect the changes or output the error during reloading. Other commands are needed at different stages for testing or deployment.</p>
+<p>Developers usually put those commands in a manifest file like Makefile, package.json, etc. And run them from Terminal.</p>
+<p>We have been thinking about a simplified way to work with those commands. What if we can have a specialized tool for those commands? Can we click and start them from a GUI instead of memorizing and keystroke those subcommands in the manifest file?</p>
+<p>So my friend <a href="https://airwolfspace.com/" target="_blank">Kai Luo</a> and I have been working on CodeLauncher for a while, and today we are happy to announce its 1.0 release. CodeLauncher is a tool for launching various tasks for your project. You can add multiple tasks to a project, set them as auto start or on-demand start, and watch their output. If CodeLauncher detects the task is using an argument like <code>--port 1234</code>, it will automatically add a context menu item for you to open <code>localhost:1234</code> with your browser. It also provides quick access to open the project folder in Terminal or open the project with Visual Studio Code if it is installed. I bet a lot of you who read here are already using it.</p>
+<p>You can download the latest version from the homepage of the <a href="https://cl.v2ex.pro/">CodeLauncher</a> website. And you will receive its updates in the future automatically.</p>
+<p>So this is the beginning. During the development, we had many ideas and wrote them down in the <a href="/roadmap/">roadmap</a>. We will announce further progress in the blog. Sometimes we will write about SwiftUI too, since CodeLauncher is implemented with SwiftUI 3 and is free and open source.</p>
+<p>My special thanks to Yi Han for designing the App icon. And Mia for drawing the background of this website.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

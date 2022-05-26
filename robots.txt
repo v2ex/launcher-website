@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cl.v2ex.pro/sitemap.xml

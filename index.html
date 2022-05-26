@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CodeLauncher</title>
+  <link rel="apple-touch-icon" href="/img/apple_touch_icon_180.png" sizes="180x180" type="image/png">
+  <link rel="icon" type="image/png" href="/img/icon_192.png" sizes="192x192">
+  <link rel="preconnect" href="https://opensource.v2ex.pro/" crossorigin>
+  <link rel="dns-prefetch" href="https://opensource.v2ex.pro/">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+  <link rel="stylesheet" href="/style.css?r=DmNoT3KN72CTJTfYhZZeMCTfkthrYxpZOLK7JrbPMDA=">
+  <link rel="manifest" href="/manifest.json">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://cl.v2ex.pro/rss.xml">
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    function loadGoogleAnalytics() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-143BR7Z4CE';
+      script.async = true;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-143BR7Z4CE');
+    }
+
+    const consentStr = localStorage.getItem('cookieconsent');
+    if (!consentStr) {
+      // show cookie consent banner
+      document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.getElementById('cookie-consent-template').content.cloneNode(true);
+        function hideBanner() {
+          const banner = document.querySelector('.cookie-consent-banner');
+          banner.classList.add('fade');
+          setTimeout(() => banner.remove(), 200);
+        }
+        elem.querySelector('.cookie-accept').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: true,
+            time: Date.now(),
+          }));
+          hideBanner();
+          loadGoogleAnalytics();
+        });
+        elem.querySelector('.cookie-decline').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: false,
+            time: Date.now(),
+          }));
+          hideBanner();
+        });
+        document.body.appendChild(elem);
+      });
+    } else {
+      const consent = JSON.parse(consentStr);
+      if (consent.accept) {
+        loadGoogleAnalytics();
+      }
+    }
+  </script>
+  
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+  axios.get('https://opensource.v2ex.pro/codelauncher/appcast.xml')
+  .then(response => {
+    const x2js = new X2JS();
+    const appcast = x2js.xml_str2json(response.data);
+
+    const download = {
+      latestVersion: appcast.rss.channel.item.title,
+      releaseDate: new Date(appcast.rss.channel.item.pubDate),
+      url: appcast.rss.channel.item.enclosure._url,
+    };
+
+    document.querySelector('.latest-version').textContent = `The latest version: ${download.latestVersion}`;
+    // use `MMM dd, YYYY` date format, remove day of week
+    const dateSegments = download.releaseDate.toDateString().split(' ');
+    const releaseDateString = `${dateSegments[1]} ${dateSegments[2]}, ${dateSegments[3]}`;
+    document.querySelector('.release-date').textContent = `Released on ${releaseDateString}`;
+    document.querySelector('.download-button').href = download.url;
+
+    console.log("CodeLauncher latest version is " + download.latestVersion + " released on " + download.releaseDate);
+    console.log("Download URL is " + download.url);
+  })
+  .catch(error => console.log(error));
+});
+</script>
+
+</head>
+<body>
+<template id="cookie-consent-template">
+  <div class="cookie-consent-banner">
+    <div class="cookie-consent-inner">
+      <span>This website may use cookies for statistics purposes.</span>
+      <div class="control-group">
+        <button class="cookie-accept">OK</button>
+        <button class="cookie-decline">No thanks</button>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="wrapper">
+  <div id="app">
+    <div class="sidebar">
+  <div class="sidebar-inner">
+    
+    
+    
+    
+    
+    
+    
+    <a href="/" class="sidebar-item active">CodeLauncher</a>
+    
+    <a href="&#x2F;use-cases&#x2F;" class="sidebar-item">Use Cases</a>
+    
+    <a href="&#x2F;roadmap&#x2F;" class="sidebar-item">Roadmap</a>
+    
+    <a href="&#x2F;blog&#x2F;" class="sidebar-item">Blog</a>
+    
+    
+  </div>
+</div>
+    <div class="main">
+      
+<div class="h-stack">
+  <img src="./img/AppIcon_v1_144.png?r=IBNeWvewgo9xP67+U5tDT6yQBuU5aFBh81YEBakXiqY=" alt="CodeLauncher" class="app-icon" width="48" height="48">
+  <h1>CodeLauncher</h1>
+</div>
+<p>As a developer, you need to run many different processes for your development work. CodeLauncher provides a hub for all the server software you need, and you can organize them by project and check their output accordingly.</p>
+<p>
+  <picture>
+  <source srcset="/screenshots/CodeLauncher-screenshot-1.webp" type="image/webp">
+  <img src="/screenshots/CodeLauncher-screenshot-1.png" alt="CodeLauncher Screenshot" class="screenshot">
+  </picture>
+</p>
+<h2>Core Features</h2>
+<ul>
+  <li>Manage processes by project</li>
+  <li>Check the output of each process</li>
+  <li>Auto start projects when CodeLauncher starts</li>
+  <li>Manage environment variables of each process</li>
+  <li>Open project directory with Terminal or Visual Studio Code</li>
+  <li>Export/import projects for sharing between team members</li>
+</ul>
+<div class="banner-download">
+  <div class="download-info">
+    <span class="latest-version">The latest version: 1.0.1</span>
+    <p class="release-date subtitle">Released on Jan 07, 2022</p>
+  </div>
+  <div class="download-button-container">
+    <a target="_blank" class="download-button" href="https://opensource.v2ex.pro/codelauncher/release-1.0.1.102/CodeLauncher.zip">Download</a>
+  </div>
+</div>
+<h2>Open Source</h2>
+<p>CodeLauncher is free and <a href="https://github.com/v2ex/launcher" target="_blank">open-source</a>.</p>
+<p>If you have used <a href="https://supervisord.org/" target="_blank">supervisor</a> on Linux before, you will find the concept is quite similar. CodeLauncher works like a GUI version of supervisor for macOS, while the main goals are to make it easier to organize processes and check the output.</p>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

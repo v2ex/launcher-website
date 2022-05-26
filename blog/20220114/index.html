@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#00215e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A Minimal Cookie Consent Banner</title>
+  <link rel="apple-touch-icon" href="/img/apple_touch_icon_180.png" sizes="180x180" type="image/png">
+  <link rel="icon" type="image/png" href="/img/icon_192.png" sizes="192x192">
+  <link rel="preconnect" href="https://opensource.v2ex.pro/" crossorigin>
+  <link rel="dns-prefetch" href="https://opensource.v2ex.pro/">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+  <link rel="stylesheet" href="/style.css?r=DmNoT3KN72CTJTfYhZZeMCTfkthrYxpZOLK7JrbPMDA=">
+  <link rel="manifest" href="/manifest.json">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://cl.v2ex.pro/rss.xml">
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    function loadGoogleAnalytics() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-143BR7Z4CE';
+      script.async = true;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-143BR7Z4CE');
+    }
+
+    const consentStr = localStorage.getItem('cookieconsent');
+    if (!consentStr) {
+      // show cookie consent banner
+      document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.getElementById('cookie-consent-template').content.cloneNode(true);
+        function hideBanner() {
+          const banner = document.querySelector('.cookie-consent-banner');
+          banner.classList.add('fade');
+          setTimeout(() => banner.remove(), 200);
+        }
+        elem.querySelector('.cookie-accept').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: true,
+            time: Date.now(),
+          }));
+          hideBanner();
+          loadGoogleAnalytics();
+        });
+        elem.querySelector('.cookie-decline').addEventListener('click', () => {
+          localStorage.setItem('cookieconsent', JSON.stringify({
+            accept: false,
+            time: Date.now(),
+          }));
+          hideBanner();
+        });
+        document.body.appendChild(elem);
+      });
+    } else {
+      const consent = JSON.parse(consentStr);
+      if (consent.accept) {
+        loadGoogleAnalytics();
+      }
+    }
+  </script>
+  
+</head>
+<body>
+<template id="cookie-consent-template">
+  <div class="cookie-consent-banner">
+    <div class="cookie-consent-inner">
+      <span>This website may use cookies for statistics purposes.</span>
+      <div class="control-group">
+        <button class="cookie-accept">OK</button>
+        <button class="cookie-decline">No thanks</button>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="wrapper">
+  <div id="app">
+    <div class="sidebar">
+  <div class="sidebar-inner">
+    
+    
+    
+    
+    
+    
+    
+    <a href="/" class="sidebar-item">CodeLauncher</a>
+    
+    <a href="&#x2F;use-cases&#x2F;" class="sidebar-item">Use Cases</a>
+    
+    <a href="&#x2F;roadmap&#x2F;" class="sidebar-item">Roadmap</a>
+    
+    <a href="&#x2F;blog&#x2F;" class="sidebar-item active">Blog</a>
+    
+    
+  </div>
+</div>
+    <div class="main">
+      
+  
+  <div id="breadcrumb"><a href="/">CodeLauncher</a><span class="chevron"></span><a href="/blog/">Blog</a><span class="chevron"></span></div>
+
+  <h1>A Minimal Cookie Consent Banner</h1>
+  
+<div class="author">
+  <a href="https://twitter.com/stdc105" target="_blank"><img src="/img/avatars/stdc105.png" class="avatar"></a>
+  <div class="author-name"><a href="https://twitter.com/stdc105" target="_blank">Shu Lyu</a></div>
+  <div class="page-info">2022-01-14 · 3 min read</div>
+</div>
+
+  <p>Yesterday we were wondering how many visitors have found our lovely CodeLauncher website. My first thought was if there's some server access log, but I immediately realized that the site is now hosted on <a href="https://vercel.com/">Vercel</a>. Vercel has <a href="https://vercel.com/docs/concepts/edge-network/overview">its own CDN</a>, so we do not need Cloudflare on top of it, but that means there's no CloudFlare dashboard doing analytics for us. We found <a href="https://vercel.com/analytics">Vercel analytics</a> as well. However, it isn't free for our Zola powered site.</p>
+<p>Finally, we resort to adding Google Analytics to our site. It is the most popular and comprehensive solution for website statistics. It stores and sends cookies to Google, which, according to privacy laws such as <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a> and <a href="https://en.wikipedia.org/wiki/California_Consumer_Privacy_Act">CCPA</a>, requires user consent to operate. While some implementations and libraries have already solved this problem, we found most existing solutions way too complicated for our use case. So we decided to implement our cookie consent banner. How hard could it be?</p>
+<p>You probably already viewed the banner at the bottom of the page. Maybe you have already clicked &quot;OK&quot; or &quot;No thanks,&quot; and then it hid. Whichever you choose, this site remembers your choice in this browser until browsing data is cleared. If you selected &quot;OK,&quot; Google Analytics loaded and will load every time you visit our site. That's it. We wanted to keep it simple and make minimal distractions.</p>
+<p>
+  <picture>
+  <source srcset="/screenshots/site-cookie-banner.webp" type="image/webp">
+  <img src="/screenshots/site-cookie-banner.png" alt="Site Cookie Banner" class="screenshot">
+  </picture>
+</p>
+<p>We don't need to distinguish functional, tracking, or advertising cookies; without Google Analytics, this site uses no cookies at all. We don't need to enable different levels of tracking according to user preferences either; Google Analytics isn't loaded at all if one does not want these cookies. You can clear the browsing data, revisit this page, and open your browser devtool to check both. No cookies should be present, and no network requests should go beyond our domain.<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<p>If you're still reading, I guess you're up for some code. The full implementation can be found at <a href="https://github.com/v2ex/launcher-website/commit/574dc772aa0de9ad48772e38c139af4616e54bd6">this GitHub commit</a>. There are some mixed refactor in it, but the main concepts should be clear:</p>
+<ul>
+<li>Visitor's choice is stored in <code>localStorage</code>.</li>
+<li>There is a <code>cookie-consent-banner</code> in an HTML template. On each page load, add the banner to the page if there is no visitor's choice in <code>localStorage</code>.</li>
+<li>If cookie is allowed, load Google Analytics by adding a <code>&lt;script&gt;</code> element.</li>
+</ul>
+<!---
+Footnote rendering is still somewhat problematic at the time of writing. See https://github.com/getzola/zola/issues/1070
+[^1]: Markdown footnote
+-->
+<div class="footnote-definition" id="1">
+<p><sup class="footnote-definition-label">1</sup> If you have checked our promise and still would like to help with our statistics, you can clear browsing data and click "OK" to allow Google Analytics again. Or you can try <code>localStorage.removeItem('cookieconsent')</code> and refresh the page.</p>
+</div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
