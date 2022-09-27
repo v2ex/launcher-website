@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>CodeLauncher</title>
+        <link>https://cl.v2ex.pro</link>
+        <description></description>
+        <generator>Zola</generator>
+        <language>en</language>
+        <atom:link href="https://cl.v2ex.pro/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Wed, 19 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>xcconfig for DEVELOPMENT_TEAM</title>
+            <pubDate>Wed, 19 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://cl.v2ex.pro/blog/20220119-xcconfig/</link>
+            <guid>https://cl.v2ex.pro/blog/20220119-xcconfig/</guid>
+            <description>&lt;p&gt;To build and test a Swift app on your macOS, you need to sign in to an account with macOS Developer Program enrolled. That process turns into a configuration field known as &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; in your project file. So oftentimes, if you git clone a project from other people, you have to change its &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; before building and testing locally.&lt;&#x2F;p&gt;
+&lt;p&gt;But that change would create more problems if every participant used a different &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; setting. That is common when working with open source projects. In the initial release of CodeLauncher source code, &lt;code&gt;DEVEOPMENT_TEAM&lt;&#x2F;code&gt; is also included in the project file. So we wanted to find a way to simplify this so that every participant will not need to waste time changing these trivial things.&lt;&#x2F;p&gt;
+&lt;p&gt;So the method we find is to use &lt;code&gt;xcconfig&lt;&#x2F;code&gt; files. The project can include a default file for all the default values:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;DEVELOPMENT_TEAM = 3SCMMGZXY8
+&lt;&#x2F;span&gt;&lt;span&gt;ORGANIZATION_IDENTIFIER_PREFIX = com.v2ex
+&lt;&#x2F;span&gt;&lt;span&gt;CODE_SIGN_IDENTITY = &amp;quot;Developer ID Application&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;CODE_SIGN_STYLE = Manual
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;#include? &amp;quot;local.xcconfig&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then the last line optionally includes another xcconfig file which git ignores. So personal settings can be put in that &lt;code&gt;local.xcconfig&lt;&#x2F;code&gt; file. Since git ignores it, it will not touch the default values for the project.&lt;&#x2F;p&gt;
+&lt;p&gt;We find that method simple. All you need to do is put your own &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; and &lt;code&gt;ORGANIZATION_IDENTIFIER_PREFIX&lt;&#x2F;code&gt; in a &lt;code&gt;local.xcconfig&lt;&#x2F;code&gt; file.&lt;&#x2F;p&gt;
+&lt;p&gt;If Xcode is still complaining about the &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; setting, it is probably due to &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; being set in the project file. So you will need to make sure that &lt;code&gt;DEVELOPMENT_TEAM&lt;&#x2F;code&gt; is not in the &lt;code&gt;project.pbxproj&lt;&#x2F;code&gt; file.&lt;&#x2F;p&gt;
+</description>
+        </item>
+        <item>
+            <title>A Minimal Cookie Consent Banner</title>
+            <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://cl.v2ex.pro/blog/20220114/</link>
+            <guid>https://cl.v2ex.pro/blog/20220114/</guid>
+            <description>&lt;p&gt;Yesterday we were wondering how many visitors have found our lovely CodeLauncher website. My first thought was if there&#x27;s some server access log, but I immediately realized that the site is now hosted on &lt;a href=&quot;https:&#x2F;&#x2F;vercel.com&#x2F;&quot;&gt;Vercel&lt;&#x2F;a&gt;. Vercel has &lt;a href=&quot;https:&#x2F;&#x2F;vercel.com&#x2F;docs&#x2F;concepts&#x2F;edge-network&#x2F;overview&quot;&gt;its own CDN&lt;&#x2F;a&gt;, so we do not need Cloudflare on top of it, but that means there&#x27;s no CloudFlare dashboard doing analytics for us. We found &lt;a href=&quot;https:&#x2F;&#x2F;vercel.com&#x2F;analytics&quot;&gt;Vercel analytics&lt;&#x2F;a&gt; as well. However, it isn&#x27;t free for our Zola powered site.&lt;&#x2F;p&gt;
+&lt;p&gt;Finally, we resort to adding Google Analytics to our site. It is the most popular and comprehensive solution for website statistics. It stores and sends cookies to Google, which, according to privacy laws such as &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;General_Data_Protection_Regulation&quot;&gt;GDPR&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;California_Consumer_Privacy_Act&quot;&gt;CCPA&lt;&#x2F;a&gt;, requires user consent to operate. While some implementations and libraries have already solved this problem, we found most existing solutions way too complicated for our use case. So we decided to implement our cookie consent banner. How hard could it be?&lt;&#x2F;p&gt;
+&lt;p&gt;You probably already viewed the banner at the bottom of the page. Maybe you have already clicked &amp;quot;OK&amp;quot; or &amp;quot;No thanks,&amp;quot; and then it hid. Whichever you choose, this site remembers your choice in this browser until browsing data is cleared. If you selected &amp;quot;OK,&amp;quot; Google Analytics loaded and will load every time you visit our site. That&#x27;s it. We wanted to keep it simple and make minimal distractions.&lt;&#x2F;p&gt;
+&lt;p&gt;
+  &lt;picture&gt;
+  &lt;source srcset=&quot;&#x2F;screenshots&#x2F;site-cookie-banner.webp&quot; type=&quot;image&#x2F;webp&quot;&gt;
+  &lt;img src=&quot;&#x2F;screenshots&#x2F;site-cookie-banner.png&quot; alt=&quot;Site Cookie Banner&quot; class=&quot;screenshot&quot;&gt;
+  &lt;&#x2F;picture&gt;
+&lt;&#x2F;p&gt;
+&lt;p&gt;We don&#x27;t need to distinguish functional, tracking, or advertising cookies; without Google Analytics, this site uses no cookies at all. We don&#x27;t need to enable different levels of tracking according to user preferences either; Google Analytics isn&#x27;t loaded at all if one does not want these cookies. You can clear the browsing data, revisit this page, and open your browser devtool to check both. No cookies should be present, and no network requests should go beyond our domain.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;If you&#x27;re still reading, I guess you&#x27;re up for some code. The full implementation can be found at &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;v2ex&#x2F;launcher-website&#x2F;commit&#x2F;574dc772aa0de9ad48772e38c139af4616e54bd6&quot;&gt;this GitHub commit&lt;&#x2F;a&gt;. There are some mixed refactor in it, but the main concepts should be clear:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Visitor&#x27;s choice is stored in &lt;code&gt;localStorage&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;There is a &lt;code&gt;cookie-consent-banner&lt;&#x2F;code&gt; in an HTML template. On each page load, add the banner to the page if there is no visitor&#x27;s choice in &lt;code&gt;localStorage&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;If cookie is allowed, load Google Analytics by adding a &lt;code&gt;&amp;lt;script&amp;gt;&lt;&#x2F;code&gt; element.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;!---
+Footnote rendering is still somewhat problematic at the time of writing. See https:&#x2F;&#x2F;github.com&#x2F;getzola&#x2F;zola&#x2F;issues&#x2F;1070
+[^1]: Markdown footnote
+--&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;
+&lt;p&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt; If you have checked our promise and still would like to help with our statistics, you can clear browsing data and click &quot;OK&quot; to allow Google Analytics again. Or you can try &lt;code&gt;localStorage.removeItem(&#x27;cookieconsent&#x27;)&lt;&#x2F;code&gt; and refresh the page.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;</description>
+        </item>
+        <item>
+            <title>1.0.2 · Initial Support for Themes</title>
+            <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://cl.v2ex.pro/blog/20220112/</link>
+            <guid>https://cl.v2ex.pro/blog/20220112/</guid>
+            <description>&lt;p&gt;On Jan 12&#x27;s 1.0.2 update, we added support for themes. Now you can select a theme in the settings. The previous default theme is now called &amp;quot;Use device theme (reverse)&amp;quot; because it uses a dark output under light mode. A new theme called &amp;quot;Dracula&amp;quot; is also added.&lt;&#x2F;p&gt;
+&lt;p&gt;Today I moved the website build system to Vercel. That is my first-time experience with Vercel, and it is fantastic. Previously I first tried to use Cloudflare Pages to build the site since we already use Cloudflare CDN. However, it took them a manual intervention to enable our domain v2ex.pro for Cloudflare Pages custom domain. I still do not know why. While waiting for their response, I googled and found other &lt;a href=&quot;https:&#x2F;&#x2F;community.cloudflare.com&#x2F;t&#x2F;custom-domain-at-cloudflare-pages-is-stuck-in-522-error&#x2F;264490&quot;&gt;confused and disappointed users&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;So I tried to use GitHub Pages then. But GitHub Pages does not have native support for Zola, the framework I am using for the CodeLauncher website. So I added a GitHub Action for building the website and publishing it to GitHub Pages.&lt;&#x2F;p&gt;
+&lt;p&gt;Then I was looking for a solution to redirect www.v2ex.pro and v2ex.pro to cl.v2ex.pro because currently cl.v2ex.pro is the only website under this domain. &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;xieyuheng&quot;&gt;Yuheng&lt;&#x2F;a&gt; recommended Vercel in the related GitHub issue &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;v2ex&#x2F;launcher-website&#x2F;issues&#x2F;10&quot;&gt;#10&lt;&#x2F;a&gt; as a straightforward solution for setting up that kind of redirection. And ta-da now the website smoothly runs on Vercel and has all expected redirections.&lt;&#x2F;p&gt;
+&lt;p&gt;Comparing the three build solutions I have tried, Vercel provides the best experience overall.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloudflare Pages uses a big image that seemingly includes all the frameworks they can support. It makes building with CF Pages is the slowest. Also, &lt;a href=&quot;https:&#x2F;&#x2F;community.cloudflare.com&#x2F;t&#x2F;cloudflare-pages-zola-build-fails-glibcxx-3-4-26-not-found&#x2F;316457&#x2F;13&quot;&gt;it cannot work with the latest version of Zola&lt;&#x2F;a&gt;, and you have to specify an environment variable like ZOLA_VERSION=0.14.0 to use an older version, while as of this writing, the latest version is 0.15.2.&lt;&#x2F;li&gt;
+&lt;li&gt;GitHub Pages natively support Jekyll. But you will need to use an action if you want to use other frameworks. That is probably not a big deal since GH Action is awesome!&lt;&#x2F;li&gt;
+&lt;li&gt;On Vercel, my website build just works. If you need to fine-tune things like the &lt;code&gt;Cache-Control&lt;&#x2F;code&gt; header for images, you can do it with a &lt;a href=&quot;https:&#x2F;&#x2F;vercel.com&#x2F;docs&#x2F;cli#project-configuration&#x2F;headers&quot;&gt;vercel.json&lt;&#x2F;a&gt; file.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+        </item>
+        <item>
+            <title>The First Minor Update 1.0.1</title>
+            <pubDate>Fri, 07 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://cl.v2ex.pro/blog/20220107/</link>
+            <guid>https://cl.v2ex.pro/blog/20220107/</guid>
+            <description>&lt;p&gt;In the first minor update of CodeLauncher, we fixed these issues:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A bug in parsing arguments. Now a command with complex arguments like this works: &lt;code&gt;nginx -g &amp;quot;daemon off;&amp;quot;&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;An issue in reading stderr that was causing a high CPU load.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;And we made a small adjustment to the color used for indicating the status of a task:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Green for running task&lt;&#x2F;li&gt;
+&lt;li&gt;Red for stopped task with non-0 exit code&lt;&#x2F;li&gt;
+&lt;li&gt;Gray for stopped task with 0 exit code&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+        </item>
+        <item>
+            <title>Introducing CodeLauncher 1.0</title>
+            <pubDate>Sun, 02 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://cl.v2ex.pro/blog/20220102/</link>
+            <guid>https://cl.v2ex.pro/blog/20220102/</guid>
+            <description>&lt;p&gt;Most modern Web development frameworks like Flask and static site generators like Jekyll run commands. There is usually the main command to start a server listening on a port. As developers make changes to the files in the project folder, that server detects those changes and reload the project to reflect the changes or output the error during reloading. Other commands are needed at different stages for testing or deployment.&lt;&#x2F;p&gt;
+&lt;p&gt;Developers usually put those commands in a manifest file like Makefile, package.json, etc. And run them from Terminal.&lt;&#x2F;p&gt;
+&lt;p&gt;We have been thinking about a simplified way to work with those commands. What if we can have a specialized tool for those commands? Can we click and start them from a GUI instead of memorizing and keystroke those subcommands in the manifest file?&lt;&#x2F;p&gt;
+&lt;p&gt;So my friend &lt;a href=&quot;https:&#x2F;&#x2F;airwolfspace.com&#x2F;&quot; target=&quot;_blank&quot;&gt;Kai Luo&lt;&#x2F;a&gt; and I have been working on CodeLauncher for a while, and today we are happy to announce its 1.0 release. CodeLauncher is a tool for launching various tasks for your project. You can add multiple tasks to a project, set them as auto start or on-demand start, and watch their output. If CodeLauncher detects the task is using an argument like &lt;code&gt;--port 1234&lt;&#x2F;code&gt;, it will automatically add a context menu item for you to open &lt;code&gt;localhost:1234&lt;&#x2F;code&gt; with your browser. It also provides quick access to open the project folder in Terminal or open the project with Visual Studio Code if it is installed. I bet a lot of you who read here are already using it.&lt;&#x2F;p&gt;
+&lt;p&gt;You can download the latest version from the homepage of the &lt;a href=&quot;https:&#x2F;&#x2F;cl.v2ex.pro&#x2F;&quot;&gt;CodeLauncher&lt;&#x2F;a&gt; website. And you will receive its updates in the future automatically.&lt;&#x2F;p&gt;
+&lt;p&gt;So this is the beginning. During the development, we had many ideas and wrote them down in the &lt;a href=&quot;&#x2F;roadmap&#x2F;&quot;&gt;roadmap&lt;&#x2F;a&gt;. We will announce further progress in the blog. Sometimes we will write about SwiftUI too, since CodeLauncher is implemented with SwiftUI 3 and is free and open source.&lt;&#x2F;p&gt;
+&lt;p&gt;My special thanks to Yi Han for designing the App icon. And Mia for drawing the background of this website.&lt;&#x2F;p&gt;
+</description>
+        </item>
+    </channel>
+</rss>
